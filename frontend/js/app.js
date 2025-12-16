@@ -1,8 +1,10 @@
     // Configuration
-// Auto-detect if running on production or localhost
+// Auto-detect API URL: localhost or production (103.76.182.195)
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:3000/api'
   : `${window.location.protocol}//${window.location.hostname}:3000/api`;
+
+console.log('🌐 API URL:', API_BASE_URL);
 
 // Global State
 let currentUser = null;
