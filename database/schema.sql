@@ -278,13 +278,12 @@ ON DUPLICATE KEY UPDATE password = VALUES(password);
 
 INSERT INTO employees (
   fullname, email, username, password, 
-  department, position, role, status, start_date
+  position, role, status, start_date
 ) VALUES (
   'HR Manager', 
   'hr@bunnyphone.com', 
   'hrmanager', 
   '$2a$10$dCxN6YhCaLVf2X9zK2J5K.JGYzL2m3N4pQrStuVwXyZ8AbCdEf1ni', -- password: hr123
-  'Human Resources', 
   'HR Manager', 
   'hr', 
   'active',
