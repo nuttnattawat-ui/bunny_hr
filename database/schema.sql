@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS departments (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Add employees.department_id column and backfill/link (best-effort)
-ALTER TABLE employees ADD COLUMN IF NOT EXISTS department_id INT NULL;
+-- Add employees.department_id column (safe - will error if exists, but that's ok)
+ALTER TABLE employees ADD COLUMN department_id INT NULL;
 
 -- Backfill departments from existing employee department names
 INSERT IGNORE INTO departments(name)
