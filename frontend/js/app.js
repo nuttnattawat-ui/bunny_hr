@@ -1,5 +1,8 @@
     // Configuration
-const API_BASE_URL = 'http://localhost:3000/api';
+// Auto-detect if running on production or localhost
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:3000/api'
+  : `${window.location.protocol}//${window.location.hostname}:3000/api`;
 
 // Global State
 let currentUser = null;
