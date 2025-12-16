@@ -55,18 +55,13 @@ CREATE TABLE IF NOT EXISTS departments (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Add employees.department_id column (safe - will error if exists, but that's ok)
-ALTER TABLE employees ADD COLUMN department_id INT NULL;
-
--- Backfill departments from existing employee department names
-INSERT IGNORE INTO departments(name)
-SELECT DISTINCT department FROM employees WHERE department IS NOT NULL AND department <> '';
-
--- Link employees.department_id via name match
-UPDATE employees e
-LEFT JOIN departments d ON d.name = e.department
-SET e.department_id = d.id
-WHERE e.department_id IS NULL AND e.department IS NOT NULL AND e.department <> '';
+-- Insert default departments
+INSERT IGNORE INTO departments (name) VALUES 
+  ('Admin'),
+  ('HR'),
+  ('Sales'),
+  ('IT'),
+  ('Operations');
 
 -- Add FK constraint (ignore if already exists)
 ALTER TABLE employees
@@ -277,13 +272,12 @@ CREATE TABLE IF NOT EXISTS audit_log (
 -- ===== Insert Sample Admin User =====
 INSERT INTO employees (
   fullname, email, username, password, 
-  department, position, role, status, start_date
+  position, role, status, start_date
 ) VALUES (
   'Administrator', 
   'admin@bunnyphone.com', 
   'admin', 
   '$2a$10$QyCQlT8qR.JGI0y9m5ySF.7dU5yL5E2pZqRwhjI7m.Q8KpgEIxZzy', -- password: admin123
-  'Admin', 
   'System Admin', 
   'admin', 
   'active',
