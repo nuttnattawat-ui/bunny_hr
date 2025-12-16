@@ -63,15 +63,6 @@ INSERT IGNORE INTO departments (name) VALUES
   ('IT'),
   ('Operations');
 
--- Add FK constraint (ignore if already exists)
-ALTER TABLE employees
-ADD CONSTRAINT fk_employees_department_id
-FOREIGN KEY (department_id) REFERENCES departments(id)
-ON UPDATE CASCADE ON DELETE SET NULL;
-
--- Drop legacy text column after backfill (run only if exists)
-ALTER TABLE employees DROP COLUMN department;
-
 -- ===== Attendance Table =====
 CREATE TABLE IF NOT EXISTS attendance (
   id INT PRIMARY KEY AUTO_INCREMENT,
